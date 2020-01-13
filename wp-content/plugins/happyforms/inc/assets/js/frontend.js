@@ -237,57 +237,55 @@
 			this.$form.addClass( 'happyforms-form--submitting' );
 			this.$submits.attr( 'disabled', 'disabled' );
 
-			$.ajax( {
-				type: 'post',
-				data: this.serialize( e.target ),
-			} ).done( this.onSubmitComplete.bind( this ) );
+			$.post(this.$form.attr("action"), this.$form.serialize()).then(this.onSubmitComplete.bind(this));
 		},
 
 		onSubmitComplete: function( response ) {
-			this.$form.trigger( 'happyforms.submitted', response );
+			alert("Thank you!");
+			// this.$form.trigger( 'happyforms.submitted', response );
 
-			if ( ! response.data ) {
-				return false;
-			}
+			// if ( ! response.data ) {
+			// 	return false;
+			// }
 
-			if ( response.data.html ) {
-				var $el = $( response.data.html );
-				var $parts = $( '[data-happyforms-type]', this.$form );
+			// if ( response.data.html ) {
+			// 	var $el = $( response.data.html );
+			// 	var $parts = $( '[data-happyforms-type]', this.$form );
 
-				$parts.each( function() {
-					$( this ).trigger( 'happyforms.detach' );
-				} );
+			// 	$parts.each( function() {
+			// 		$( this ).trigger( 'happyforms.detach' );
+			// 	} );
 
-				this.detach();
+			// 	this.detach();
 
-				var $form = $( 'form', $el );
-				$( 'form', this.$el ).replaceWith( $form );
+			// 	var $form = $( 'form', $el );
+			// 	$( 'form', this.$el ).replaceWith( $form );
 
-				this.$el.happyForm();
+			// 	this.$el.happyForm();
 
-				var elTopOffset = this.$el.offset().top;
-				var $notices = $( '.happyforms-message-notices', this.$el );
+			// 	var elTopOffset = this.$el.offset().top;
+			// 	var $notices = $( '.happyforms-message-notices', this.$el );
 
-				if ( $form.is( '.happyforms-form--notices-below' ) && $notices.length ) {
-					elTopOffset = $notices.offset().top;
-				}
+			// 	if ( $form.is( '.happyforms-form--notices-below' ) && $notices.length ) {
+			// 		elTopOffset = $notices.offset().top;
+			// 	}
 
-				// User filterable
-				var increment = $form.attr( 'data-happyforms-scroll-offset' );
+			// 	// User filterable
+			// 	var increment = $form.attr( 'data-happyforms-scroll-offset' );
 
-				if ( increment ) {
-					increment = parseInt( increment, 10 );
-					elTopOffset += increment;
-				}
+			// 	if ( increment ) {
+			// 		increment = parseInt( increment, 10 );
+			// 		elTopOffset += increment;
+			// 	}
 
-				this.$el.trigger( 'happyforms-scrolltop', elTopOffset );
+			// 	this.$el.trigger( 'happyforms-scrolltop', elTopOffset );
 
-				var hasErrorNotices = $( '.happyforms-message-notice.error', $form ).length;
+			// 	var hasErrorNotices = $( '.happyforms-message-notice.error', $form ).length;
 
-				if ( ! hasErrorNotices && this.$el.hasClass( 'happyforms-form--hide-on-submit' ) ) {
-					$( '.happyforms-part', $form ).hide();
-				}
-			}
+			// 	if ( ! hasErrorNotices && this.$el.hasClass( 'happyforms-form--hide-on-submit' ) ) {
+			// 		$( '.happyforms-part', $form ).hide();
+			// 	}
+			// }
 		},
 
 		onScrollTop: function( e, offset ) {
